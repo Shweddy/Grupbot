@@ -1,13 +1,18 @@
+import os
 from flask import Flask, request, jsonify, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from dotenv import load_dotenv
+
+# Load environment variables from a .env file (if you're using one)
+load_dotenv()
 
 app = Flask(__name__)
 
-# LINE API configuration
-line_bot_api = LineBotApi('YOUR_CHANNEL_ACCESS_TOKEN')
-handler = WebhookHandler('YOUR_CHANNEL_SECRET')
+# LINE API configuration using environment variables
+line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
+handler = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET'))
 
 # Dictionary of food recommendations
 food_recommendations = {
